@@ -15,38 +15,13 @@ export const useCartStore = defineStore("CartStore", {
             }
         },
 
+        clearProducts(name) {
+            this.items = this.items.filter((i) => i.name != name);
+        },
+
         setItemCount(item, count) {
-            const index = this.items.findIndex((i) => i.name === item.name);
-
-            if (index !== -1) {
-                // Si se encuentra el item en el array, actualiza su cantidad
-                const newCount = parseInt(count);
-                if (newCount > 0) {
-                    // Actualiza la cantidad de veces que aparece el artículo en el array
-                    const currentCount = this.items.filter(
-                        (i) => i.name === item.name
-                    ).length;
-                    const diff = newCount - currentCount;
-
-                    if (diff > 0) {
-                        // Agrega el artículo al array más veces si la nueva cantidad es mayor
-                        for (let i = 0; i < diff; i++) {
-                            this.items.push({ ...item });
-                        }
-                    } else if (diff < 0) {
-                        // Elimina el artículo del array si la nueva cantidad es menor
-                        for (let i = 0; i < Math.abs(diff); i++) {
-                            const itemIndex = this.items.findIndex(
-                                (i) => i.name === item.name
-                            );
-                            this.items.splice(itemIndex, 1);
-                        }
-                    }
-                } else {
-                    // Si la nueva cantidad es 0 o negativa, elimina todos los elementos del array
-                    this.items = this.items.filter((i) => i.name !== item.name);
-                }
-            }
+            this.clearProducts(item.name);
+            this.addProducts(count, item);
         },
 
         removeItem(item) {
