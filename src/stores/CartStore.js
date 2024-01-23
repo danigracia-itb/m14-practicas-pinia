@@ -1,6 +1,7 @@
 import { useLocalStorage } from "@vueuse/core";
 import { groupBy } from "lodash";
 import { defineStore } from "pinia";
+import { useAuthUserStore } from "./AuthStore";
 
 export const useCartStore = defineStore("CartStore", {
     historyEnabled: true,
@@ -53,6 +54,14 @@ export const useCartStore = defineStore("CartStore", {
 
         removeItem(item) {
             this.items = this.items.filter((i) => i.name !== item);
+        },
+
+        checkout() {
+            const authUserStore = useAuthUserStore();
+
+            alert(
+                `${authUserStore.username} just bought ${this.count} items at a total of $${this.total}`
+            );
         },
     },
     getters: {

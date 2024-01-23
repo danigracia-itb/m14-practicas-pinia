@@ -39,7 +39,9 @@ const active = ref(false);
                         @click="cartStore.$reset()"
                         >Clear Cart</AppButton
                     >
-                    <AppButton class="primary">Checkout</AppButton>
+                    <AppButton class="primary" @click="cartStore.checkout()"
+                        >Checkout</AppButton
+                    >
                 </div>
             </div>
             <!-- Uncomment and use condition to show when cart is empty -->
